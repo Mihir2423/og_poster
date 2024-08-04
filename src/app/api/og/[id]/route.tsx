@@ -53,6 +53,9 @@ export async function GET(req: Request, context: any) {
             <img
               src={post.image}
               alt="image"
+              onError={(e) => {
+                e.currentTarget.src = "/error-image.png";
+              }}
               width={360}
               height={360}
               style={{ borderRadius: 20, transform: "translateY(-60px)" }}
