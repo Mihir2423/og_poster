@@ -12,7 +12,7 @@ export const Posts = (props: Props) => {
     {
       id: 1,
       title: "Title of the Post",
-      image: "/post.png",
+      image: "/posst.png",
       description: "Description about the post, here we will add the content.",
     },
     {

@@ -5,8 +5,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Delete, EllipsisVertical, ShareIcon, UserCircle } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
+import { ErrorImage } from "./error-image";
 
 export const Post = ({ item }: { item: PostProps }) => {
   return (
@@ -32,7 +32,7 @@ export const Post = ({ item }: { item: PostProps }) => {
       </div>
       {item?.image && (
         <div className="flex justify-center w-full">
-          <Image alt="post" src={item.image} width={300} height={300} />
+          <ErrorImage image={item.image} />
         </div>
       )}
       <div className="flex flex-col border-gray-400 mt-3 pt-3 border-t">

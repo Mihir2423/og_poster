@@ -32,6 +32,7 @@ const formSchema = z.object({
     .max(100, {
       message: "Content must be at most 100 characters",
     }),
+  picture: z.union([z.string().url(), z.string().max(0)]).optional(),
 });
 
 type Props = {};
@@ -42,11 +43,13 @@ export const PostForm = (props: Props) => {
     defaultValues: {
       title: "",
       content: "",
+      picture: "",
     },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+    form.reset();
   }
   return (
     <div>
@@ -60,6 +63,19 @@ export const PostForm = (props: Props) => {
                 <FormLabel>Title</FormLabel>
                 <FormControl>
                   <Input placeholder="Enter Title" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="picture"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Enter URL</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter URL" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
