@@ -4,16 +4,14 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Delete, EllipsisVertical, ShareIcon, UserCircle } from "lucide-react";
+import { EllipsisVertical, ShareIcon, UserCircle } from "lucide-react";
 import Link from "next/link";
+import { DeletePost } from "./delete-post";
 import { ErrorImage } from "./error-image";
 
-export const Post = ({ item }: { item: PostProps }) => {
+export const Post = ({ item, main }: { item: PostProps; main: boolean }) => {
   return (
-    <Link
-      href={`/post/${item.id}`}
-      className="shadow-gray-200 shadow-md my-6 p-4 rounded-xl w-[380px]"
-    >
+    <div className="shadow-gray-200 shadow-md my-6 p-4 rounded-xl w-[380px]">
       <div className="z-[10] flex justify-between items-center">
         <UserCircle size={18} />
         <DropdownMenu>
@@ -24,21 +22,25 @@ export const Post = ({ item }: { item: PostProps }) => {
             <DropdownMenuItem className="flex justify-between items-center w-full">
               Share <ShareIcon size={14} />
             </DropdownMenuItem>
-            <DropdownMenuItem className="flex justify-between items-center w-full">
-              Delete <Delete size={14} />
-            </DropdownMenuItem>
+            <DeletePost id={item._id} />
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
       {item?.image && (
-        <div className="flex justify-center w-full">
+        <Link
+          href={`/post/${item._id}`}
+          className="flex justify-center py-2 w-full"
+        >
           <ErrorImage image={item.image} />
-        </div>
+        </Link>
       )}
-      <div className="flex flex-col border-gray-400 mt-3 pt-3 border-t">
+      <Link
+        href={`/post/${item._id}`}
+        className="flex flex-col border-gray-400 mt-3 pt-3 border-t"
+      >
         <h1 className="text-base text-black">{item.title}</h1>
         <p className="text-gray-900 text-sm">{item.description}</p>
-      </div>
-    </Link>
+      </Link>
+    </div>
   );
 };

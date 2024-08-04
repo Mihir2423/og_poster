@@ -15,7 +15,7 @@ export const ErrorImage = ({ image }: Props) => {
       src={imgSrc}
       width={300}
       height={300}
-      className="object-center"
+      className="rounded-md w-full max-w-[360px] max-h-[300px] object-center"
       onError={() => {
         setImgSrc("/error-image.png");
       }}

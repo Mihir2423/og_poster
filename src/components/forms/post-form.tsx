@@ -11,7 +11,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { createPost } from "@/lib/actions/post.action";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2 } from "lucide-react";
+import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -24,15 +27,15 @@ const formSchema = z.object({
     .max(40, {
       message: "Title must be at most 40 characters.",
     }),
-  content: z
+  description: z
     .string()
     .min(10, {
-      message: "Content must be at least 10 characters",
+      message: "Description must be at least 10 characters",
     })
     .max(100, {
-      message: "Content must be at most 100 characters",
+      message: "Description must be at most 100 characters",
     }),
-  picture: z.union([z.string().url(), z.string().max(0)]).optional(),
+  image: z.union([z.string().url(), z.string().max(0)]).optional(),
 });
 
 type Props = {};
@@ -42,14 +45,26 @@ export const PostForm = (props: Props) => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: "",
-      content: "",
-      picture: "",
+      description: "",
+      image: "",
     },
   });
+  const [isPending, startTransition] = useTransition();
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    form.reset();
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    startTransition(() => {
+      createPost({
+        title: values.title,
+        description: values.description,
+        image: values.image,
+      }).then((data) => {
+        if (data?.success) {
+          form.reset();
+        } else {
+          alert(data?.message);
+        }
+      });
+    });
   }
   return (
     <div>
@@ -70,7 +85,7 @@ export const PostForm = (props: Props) => {
           />
           <FormField
             control={form.control}
-            name="picture"
+            name="image"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Enter URL</FormLabel>
@@ -83,7 +98,7 @@ export const PostForm = (props: Props) => {
           />
           <FormField
             control={form.control}
-            name="content"
+            name="description"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Description</FormLabel>
@@ -98,8 +113,9 @@ export const PostForm = (props: Props) => {
               </FormItem>
             )}
           />
-          <Button type="submit" variant="custom">
+          <Button type="submit" disabled={isPending} variant="custom">
             Submit
+            {isPending && <Loader2 className="animate-spin" size={14} />}
           </Button>
         </form>
       </Form>

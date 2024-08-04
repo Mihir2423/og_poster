@@ -1,19 +1,19 @@
 import { Post } from "@/components/posts/post";
-import React from "react";
+import { PostSkeleton } from "@/components/posts/post-skeleton";
+import { Wrong } from "@/components/posts/wrong";
+import { getPostById } from "@/lib/actions/post.action";
+import React, { Suspense } from "react";
 
-type Props = {};
-
-const PostDetailPage = (props: Props) => {
-  const data = {
-    id: 1,
-    title: "Title of the Post",
-    image: "/post.png",
-    description: "Description about the post, here we will add the content.",
-  };
-
+const PostDetailPage = async ({ params }: ParamsProps) => {
+  const data = await getPostById(params.id);
+  if (!data.success || !data.data) {
+    return <Wrong />;
+  }
   return (
     <main className="flex justify-center items-center h-screen">
-      <Post item={data} />
+      <Suspense fallback={<PostSkeleton />}>
+        <Post item={data.data} main={false} />
+      </Suspense>
     </main>
   );
 };

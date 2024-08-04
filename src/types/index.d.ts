@@ -3,13 +3,19 @@ declare type ChildrenProps = {
 }
 
 declare type PostProps = ({
-    id: number;
+    _id: string;
     title: string;
     image: string;
     description: string;
 } | {
-    id: number;
+    _id: string;
     title: string;
     description: string;
     image?: undefined;
 })
+
+declare type ParamsProps = {
+    params: {
+        id: string;
+    };
+}

@@ -4,35 +4,7 @@ import { Button } from "@/components/ui/button";
 import { FormModal } from "@/components/modals";
 import { Post } from "./post";
 
-type Props = {};
-
-export const Posts = (props: Props) => {
-  //   const data: number[] = [];
-  const data = [
-    {
-      id: 1,
-      title: "Title of the Post",
-      image: "/posst.png",
-      description: "Description about the post, here we will add the content.",
-    },
-    {
-      id: 2,
-      title: "Title of the Post",
-      image: "/post.png",
-      description: "Description about the post, here we will add the content.",
-    },
-    {
-      id: 3,
-      title: "Title of the Post",
-      description: "Description about the post, here we will add the content.",
-    },
-    {
-      id: 4,
-      title: "Title of the Post",
-      image: "/post.png",
-      description: "Description about the post, here we will add the content.",
-    },
-  ];
+export const Posts = ({ data }: { data: PostProps[] }) => {
   return (
     <div>
       {Array.isArray(data) &&
@@ -51,7 +23,7 @@ export const Posts = (props: Props) => {
         ) : (
           data.map((item, index) => (
             <div key={index} className="flex flex-col gap-6">
-              <Post item={item} />
+              <Post item={item} main={true} />
             </div>
           ))
         ))}
