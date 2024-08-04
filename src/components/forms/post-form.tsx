@@ -16,6 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 const formSchema = z.object({
@@ -59,9 +60,10 @@ export const PostForm = (props: Props) => {
         image: values.image,
       }).then((data) => {
         if (data?.success) {
+          toast.success("Post created successfully");
           form.reset();
         } else {
-          alert(data?.message);
+          toast.error("Failed to create post");
         }
       });
     });

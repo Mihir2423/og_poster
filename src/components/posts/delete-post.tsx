@@ -4,6 +4,7 @@ import { deletePost } from "@/lib/actions/post.action";
 import { Delete, Loader2 } from "lucide-react";
 import React, { useTransition } from "react";
 import { DropdownMenuItem } from "../ui/dropdown-menu";
+import { toast } from "sonner";
 
 type Props = {
   id: string;
@@ -15,7 +16,7 @@ export const DeletePost = ({ id }: Props) => {
     startTransition(() => {
       deletePost(id).then((data) => {
         if (!data.success) {
-          alert(data.message);
+          toast.error("Failed to delete post");
         }
       });
     });

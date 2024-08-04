@@ -1,13 +1,13 @@
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { EllipsisVertical, ShareIcon, UserCircle } from "lucide-react";
+import { EllipsisVertical, UserCircle } from "lucide-react";
 import Link from "next/link";
 import { DeletePost } from "./delete-post";
 import { ErrorImage } from "./error-image";
+import { SharePost } from "./share-post";
 
 export const Post = ({ item, main }: { item: PostProps; main: boolean }) => {
   return (
@@ -19,9 +19,7 @@ export const Post = ({ item, main }: { item: PostProps; main: boolean }) => {
             <EllipsisVertical size={18} />
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuItem className="flex justify-between items-center w-full">
-              Share <ShareIcon size={14} />
-            </DropdownMenuItem>
+            <SharePost id={item._id} />
             <DeletePost id={item._id} />
           </DropdownMenuContent>
         </DropdownMenu>
