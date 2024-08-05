@@ -6,7 +6,12 @@ export async function generateMetadata({
   params: { id: string };
 }): Promise<Metadata> {
   const id = params.id;
+  const post = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/post/${id}`);
+  const data = await post.json();
+  const title = data.title || "Generated OG of your posts";
+
   return {
+    title: `OG POSTER | ${title}`,
     openGraph: {
       images: [
         {
